@@ -27,4 +27,9 @@ class LoginController extends Controller
             ], 401);
         }
     }
+
+    public function sanity()
+    {
+        return response('hello', 200);
+    }
 }

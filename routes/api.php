@@ -48,3 +48,5 @@ Route::get('/history/{store_id}', [HistoryController::class, 'getHistoryByStoreI
 Route::get('/history/detail/{trx_id}', [HistoryController::class, 'getHistoryByTrxId']);
 
 Route::get('/check-join', [HistoryController::class, 'checkJoin']);
+
+Route::get('/hello', [LoginController::class, 'sanity']);
