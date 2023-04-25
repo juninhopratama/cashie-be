@@ -33,6 +33,8 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::post('/item/singleitem', [ItemController::class, 'getProductByIdAndStoreId']);
 
+Route::post('/item/search', [ItemController::class, 'getProductByStoreAndName']);
+
 Route::post('/item', [ItemController::class, 'createItem']);
 
 Route::put('/item', [ItemController::class, 'updateItem']);

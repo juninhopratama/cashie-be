@@ -24,6 +24,18 @@ class ItemController extends Controller
         ], 200);
     }
 
+    public function getProductByStoreAndName(Request $request)
+    {
+        $items = Item::where('store_id', $request->store_id)
+            ->where('name', 'like', '%'.$request->search.'%')
+            ->orderBy('id', 'DESC')
+            ->get();
+        return response()->json([
+            'data' => $items,
+            'message' => 'Retrieved Successfully here'
+        ], 200);
+    }
+
     public function getAll()
     {
         $items = Item::all();
