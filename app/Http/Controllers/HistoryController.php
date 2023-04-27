@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\ProductTransaction;
+use App\Models\Store;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,12 +31,16 @@ class HistoryController extends Controller
 
         $products = [];
 
+        $catch_id = 0;
+
         foreach ($res as $r) {
             $product_push = (object) [
                 'product_name' => $r->name,
                 'total' => $r->total,
                 'total_price' => $r->total_price
             ];
+
+            $catch_id = $r->store_id;
 
             array_push($products, $product_push);
         }
@@ -44,8 +49,10 @@ class HistoryController extends Controller
         $formattedChange = 'Rp. ' . number_format($trx->change, 0, ',', '.');
         $formattedBill = 'Rp. ' . number_format($trx->bill, 0, ',', '.');
         $formattedCash = 'Rp. ' . number_format($trx->total_cash, 0, ',', '.');
+        $store = Store::where('id', $catch_id)->first();
 
         return response()->json([
+            'store_name' => $store->store_name,
             'products' => $products,
             'bill' => $formattedBill,
             'total_cash' => $formattedCash,

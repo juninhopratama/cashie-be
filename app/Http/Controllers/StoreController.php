@@ -44,23 +44,27 @@ class StoreController extends Controller
     public function store(Request $request)
     {
         try {
-            $createdStore = Store::create($request->all());
-            if ($createdStore) {
+            $phoneNumber = $request->input('phone_number');
+
+            // Check if phone number already exists in the database
+            $existingStore = Store::where('phone_number', $phoneNumber)->first();
+            if ($existingStore) {
                 return response()->json([
-                    'data' => $createdStore,
-                    'message' => 'Created Successfully'
-                ], 201);
-            }else{
-                return response()->json([
-                    'data' => $createdStore,
-                    'message' => 'Failed creating store'
+                    'message' => 'Phone number already exists'
                 ], 409);
-            };
+            }
+
+            $createdStore = Store::create($request->all());
+            return response()->json([
+                'data' => $createdStore,
+                'message' => 'Created Successfully'
+            ], 201);
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()
             ], 500);
         }
+
 
     }
 

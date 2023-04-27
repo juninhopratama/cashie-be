@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\ProductTransaction;
+use App\Models\Store;
 use App\Models\Transaction;
 
 class TransactionController extends Controller
@@ -115,6 +116,9 @@ class TransactionController extends Controller
             'change' => $change,
         ]);
 
+        $store = Store::where('id', $store_id)->first();
+        $store_name = $store->store_name;
+
         $formattedBill = 'Rp. ' . number_format($bill, 0, ',', '.');
         $formattedChange = 'Rp. ' . number_format($change, 0, ',', '.');
         // Set the locale to Indonesian
@@ -123,6 +127,7 @@ class TransactionController extends Controller
         // Get the current date and time
         $date = date('d F Y H:i');
         return response()->json([
+            'store_name' => $store_name,
             'products' => $resProducts,
             'tax' => '10%',
             'total_cash' => $total_cash,
