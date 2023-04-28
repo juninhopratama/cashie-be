@@ -82,9 +82,9 @@ class HistoryController extends Controller
         if (!$trx) {
             return response()->json([
                 'bill' => "Rp0",
-                'payment_method' => "Not Available",
-                'product_count' => "Not Available",
-                'formatted_date' => "Not Available",
+                'payment_method' => "Total Payment",
+                'product_count' => "Data Not Available",
+                'formatted_date' => "-",
                 'message' => 'Retrieved Successfully'
             ], 200);
         }
