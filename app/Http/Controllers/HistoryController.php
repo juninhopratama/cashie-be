@@ -48,6 +48,8 @@ class HistoryController extends Controller
         $formattedChange = 'Rp. ' . number_format($trx->change, 0, ',', '.');
         $formattedBill = 'Rp. ' . number_format($trx->bill, 0, ',', '.');
         $formattedCash = 'Rp. ' . number_format($trx->total_cash, 0, ',', '.');
+        setlocale(LC_TIME, 'id_ID');
+        $formattedDate = $trx->created_at->format('d F Y, H:i');
         $store = Store::where('id', $catch_id)->first();
 
         return response()->json([
@@ -57,6 +59,7 @@ class HistoryController extends Controller
             'total_cash' => $formattedCash,
             'change' => $formattedChange,
             'timestamp' => $trx->created_at,
+            'formatted_date' => $formattedDate,
             'message' => 'Retrieved Successfully'
         ], 200);
     }
