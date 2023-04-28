@@ -15,8 +15,29 @@ class HistoryController extends Controller
         $trx = Transaction::where('store_id', $store_id)
             ->orderBy('created_at', 'DESC')
             ->get();
+
+        setlocale(LC_TIME, 'id_ID');
+
+        $trxData = [];
+
+        foreach ($trx as $t) {
+            $trx_push = (object) [
+                'id' => $t->id,
+                'store_id' => $t->store_id,
+                'bill' => $t->bill,
+                'total_cash' => $t->total_cash,
+                'change' => $t->change,
+                'payment_method' => $t->payment_method,
+                'formatted_date' => $t->created_at->format('d F Y, H:i'),
+                'created_at' => $t->created_at,
+                'updated_at' => $t->updated_at
+            ];
+
+            array_push($trxData, $trx_push);
+        }
+
         return response()->json([
-            'data' => $trx,
+            'data' => $trxData,
             'message' => 'Retrieved Successfully'
         ], 200);
     }
