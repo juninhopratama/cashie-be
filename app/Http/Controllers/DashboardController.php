@@ -31,7 +31,7 @@ class DashboardController extends Controller
         $resTotalNet = Transaction::select('transactions.id', 'transactions.bill', DB::raw('SUM(product_transactions.total * items.initial_price) as net'))
             ->join('product_transactions', 'transactions.id', '=', 'product_transactions.trx_id')
             ->join('items', 'product_transactions.product_id', '=', 'items.id')
-            ->where('transactions.store_id', '=', 1)
+            ->where('transactions.store_id', '=', $store_id)
             ->groupBy('transactions.id', 'transactions.bill')
             ->get();
 
