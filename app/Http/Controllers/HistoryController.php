@@ -76,14 +76,17 @@ class HistoryController extends Controller
             ->orderBy('created_at', 'DESC')
             ->first();
 
-        $productTrx = ProductTransaction::where('trx_id', $trx->id)->get();
+        $productTrx = ProductTransaction::where('trx_id', $trx->id)->sum('total');
 
         setlocale(LC_TIME, 'id_ID');
         $formattedDate = $trx->created_at->format('d F Y, H:i');
 
+        $formattedBill = 'Rp' . number_format((int) $trx->bill, 0, ',', '.');
+
         return response()->json([
-            'data' => $trx,
-            'product_count' => $productTrx->count('id'),
+            'bill' => $formattedBill,
+            'payment_method' => $trx->payment_method,
+            'product_count' => $productTrx . " Produk",
             'formatted_date' => $formattedDate,
             'message' => 'Retrieved Successfully'
         ], 200);
