@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LoginController;
@@ -52,3 +53,5 @@ Route::get('/history/detail/{trx_id}', [HistoryController::class, 'getHistoryByT
 Route::get('/check-join', [HistoryController::class, 'checkJoin']);
 
 Route::get('/hello', [LoginController::class, 'sanity']);
+
+Route::get('/dashboard/{store_id}', [DashboardController::class, 'getDashboard']);
