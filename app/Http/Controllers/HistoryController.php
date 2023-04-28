@@ -79,6 +79,16 @@ class HistoryController extends Controller
             ->orderBy('created_at', 'DESC')
             ->first();
 
+        if (!$trx) {
+            return response()->json([
+                'bill' => "Rp0",
+                'payment_method' => "Not Available",
+                'product_count' => "Not Available",
+                'formatted_date' => "Not Available",
+                'message' => 'Retrieved Successfully'
+            ], 200);
+        }
+
         $productTrx = ProductTransaction::where('trx_id', $trx->id)->sum('total');
 
         setlocale(LC_TIME, 'id_ID');
