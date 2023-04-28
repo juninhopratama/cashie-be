@@ -48,6 +48,8 @@ Route::post('/transaction/finalize', [TransactionController::class, 'finalizeTra
 
 Route::get('/history/{store_id}', [HistoryController::class, 'getHistoryByStoreId']);
 
+Route::get('/history/latest/{store_id}', [HistoryController::class, 'getLatestHistory']);
+
 Route::get('/history/detail/{trx_id}', [HistoryController::class, 'getHistoryByTrxId']);
 
 Route::get('/check-join', [HistoryController::class, 'checkJoin']);

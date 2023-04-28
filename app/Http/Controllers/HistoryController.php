@@ -6,7 +6,6 @@ use App\Models\Item;
 use App\Models\ProductTransaction;
 use App\Models\Store;
 use App\Models\Transaction;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HistoryController extends Controller
@@ -69,5 +68,24 @@ class HistoryController extends Controller
             ->join('items', 'product_transactions.product_id', '=', 'items.id')
             ->get();
         dd($res);
+    }
+
+    public function getLatestHistory($store_id)
+    {
+        $trx = Transaction::where('store_id', $store_id)
+            ->orderBy('created_at', 'DESC')
+            ->first();
+
+        $productTrx = ProductTransaction::where('trx_id', $trx->id)->get();
+
+        setlocale(LC_TIME, 'id_ID');
+        $formattedDate = $trx->created_at->format('d F Y, H:i');
+
+        return response()->json([
+            'data' => $trx,
+            'product_count' => $productTrx->count('id'),
+            'formatted_date' => $formattedDate,
+            'message' => 'Retrieved Successfully'
+        ], 200);
     }
 }
