@@ -108,13 +108,28 @@ class StoreController extends Controller
         try {
             $store = Store::find($id);
             if ($store) {
-                $store->update([
-                    'store_name' => $request->store_name,
-                    'owner_name' => $request->owner_name,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                    'password' => $request->password
+                // $store->update([
+                //     'store_name' => $request->store_name,
+                //     'owner_name' => $request->owner_name,
+                //     'email' => $request->email,
+                //     'phone' => $request->phone,
+                //     'password' => $request->password,
+                //     'image' => $request->image,
+                //     'qr' => $request->qr
+                // ]);
+
+                $data = array_filter([
+                    'store_name' => $request->input('store_name'),
+                    'owner_name' => $request->input('owner_name'),
+                    'email' => $request->input('email'),
+                    'phone' => $request->input('phone'),
+                    'password' => $request->input('password'),
+                    'image' => $request->input('image'),
+                    'qr' => $request->input('qr')
                 ]);
+
+                $store->update($data);
+                
                 return response()->json([
                     'data' => $store,
                     'message' => 'Updated Successfully'

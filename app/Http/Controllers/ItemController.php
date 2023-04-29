@@ -92,14 +92,26 @@ class ItemController extends Controller
         ])->first();
 
         if ($item->count() > 0) {
-            $item->update([
-                'name' => $request->name,
-                'description' => $request->description,
-                'initial_price' => $request->initial_price,
-                'selling_price' => $request->selling_price,
-                'stock' => $request->stock,
-                'image' => $request->image
+            // $item->update([
+            //     'name' => $request->name,
+            //     'description' => $request->description,
+            //     'initial_price' => $request->initial_price,
+            //     'selling_price' => $request->selling_price,
+            //     'stock' => $request->stock,
+            //     'image' => $request->has('image') ? $request->image : $item->image
+            // ]);
+
+            $data = array_filter([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+                'initial_price' => $request->input('initial_price'),
+                'selling_price' => $request->input('selling_price'),
+                'stock' => $request->input('stock'),
+                'image' => $request->input('image')
             ]);
+
+            $item->update($data);
+            
             return response()->json([
                 'data' => $item,
                 'message' => 'Updated Successfully'

@@ -14,6 +14,7 @@ class Store extends Model
         'email',
         'phone',
         'password',
-        'image'
+        'image',
+        'qr'
     ];
 }
