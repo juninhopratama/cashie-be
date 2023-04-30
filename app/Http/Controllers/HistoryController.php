@@ -79,6 +79,7 @@ class HistoryController extends Controller
             'bill' => $formattedBill,
             'total_cash' => $formattedCash,
             'change' => $formattedChange,
+            'payment_method' => $trx->payment_method,
             'timestamp' => $trx->created_at,
             'formatted_date' => $formattedDate,
             'message' => 'Retrieved Successfully'

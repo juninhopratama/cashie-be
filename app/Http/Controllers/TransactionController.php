@@ -134,6 +134,7 @@ class TransactionController extends Controller
             'subtotal' => $subtotal,
             'bill' => $bill,
             'change' => $change,
+            'payment_method' => $payment_method,
             'formatted_bill' => $formattedBill,
             'formatted_change' => $formattedChange,
             'transaction_date' => $date,
