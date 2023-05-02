@@ -44,11 +44,11 @@ class StoreController extends Controller
     public function store(Request $request)
     {
         try {
-            $phoneNumber = $request->input('phone_number');
+            $phoneNumber = $request->input('phone');
 
             // Check if phone number already exists in the database
             $existingStore = Store::where('phone', $phoneNumber)->get();
-            if ($existingStore) {
+            if ($existingStore->count() > 0) {
                 return response()->json([
                     'message' => 'Phone number already exists'
                 ], 409);
