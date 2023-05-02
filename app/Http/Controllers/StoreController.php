@@ -47,7 +47,7 @@ class StoreController extends Controller
             $phoneNumber = $request->input('phone_number');
 
             // Check if phone number already exists in the database
-            $existingStore = Store::where('phone', $phoneNumber)->first();
+            $existingStore = Store::where('phone', $phoneNumber)->get();
             if ($existingStore) {
                 return response()->json([
                     'message' => 'Phone number already exists'
@@ -129,7 +129,7 @@ class StoreController extends Controller
                 ]);
 
                 $store->update($data);
-                
+
                 return response()->json([
                     'data' => $store,
                     'message' => 'Updated Successfully'
